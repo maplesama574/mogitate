@@ -1,0 +1,46 @@
+.category {
+    background-color: #f8f8f8;
+    height: auto;
+    width: auto;
+}
+
+.category-title {
+    display: flex;
+    padding: 50px 20px 20px 20px;
+    justify-content: space-between;
+    align-items: center;
+}
+.create-button{
+    background-color: #ffa929;
+    border: none;
+    border-radius: 3px;
+    padding: 8px;
+    cursor: pointer;
+}
+
+.category-search{
+    margin: 20px;
+}
+.search-textbox{
+    display: block;
+    margin: 10px 0;
+    border-radius: 10px;
+    color: black;
+    padding: 10px 15px;
+    border: 1px solid black;
+}
+.category-button{
+    display: block;
+    background-color: #f7d22e;
+    padding:10px 85px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.category-cost{
+    border-radius: 3px;
+    padding: 5px 40px;
+    color: #c4b8ae;
+    border: 1px solid #c4b8ae;
+    margin: 0 20p 20px 20px;
+}
