@@ -1,0 +1,61 @@
+.register {
+    background-color: f8f8f8;
+    height: 800px;
+    width: auto;
+}
+
+.register-title{
+    display: flex;
+    justify-content:center;
+    align-items: center;
+}
+
+.register-form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.input-title{
+    font-weight: lighter;
+}
+.input-red{
+    background-color: red;
+    color: white;
+    margin-left: 5px;
+    padding: 0px 5px;
+    font-size: 13px;
+}
+.input-content{
+    padding: 10px 500px 10px 5px;
+    text-align: left;
+}
+.input-red--detail{
+    padding-left: 15px;
+    color: red;
+    font-size: 15px;
+}
+.season-input{
+    padding-right: 40px;
+}
+.input-textarea{
+    padding: 10px 510px 100px 5px;
+}
+
+.input-button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.reset-button{
+    padding:10px 60px;
+    background-color: #e0dfde;
+    margin: 10px 10px 0px 0px;
+    text-decoration: none;border-radius: 5px;
+}
+.register-button{
+    padding: 10px 60px;
+    background-color: #f5c800;
+    margin: 10px 0px 0px 10px;
+    text-decoration: none;
+    border-radius: 5px;
+}

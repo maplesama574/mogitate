@@ -1,0 +1,11 @@
+.register {
+    background-color: f8f8f8;
+    height: auto;
+    width: auto;
+}
+
+.register-form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

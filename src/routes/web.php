@@ -3,7 +3,6 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductsController;
 
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -20,17 +19,10 @@ Route::get('/', function () {
 });
 
 //ここからは必要
-//index.blade.phpに送る
+//index.blade.php
 Route::get('/products', [ProductsController::class, 'index'])->name('products.index');
-//新規作成
-Route::get('/products/create', [ProductsController::class, 'create'])->name('products.create');
 
+Route::put('/products/{productId}/update', [ProductsController::class, 'update'])->name('products.update');
 
-//products コントローラ
-Route::get('/products/{productid}', [ProductsController::class, 'index']);
-
-//seasons　コントローラ
-Route::get('/products/{productid}', [SeasonsController::class, 'index']);
-
-//中間テーブル
-Route::get('/products/{productid}', [ProductsController::class, 'index']);
+Route::get('/products/register', [ProductsController::class, 'create'])->name('products.register');
+Route::post('/products', [ProductsController::class, 'store'])->name('products.index');
