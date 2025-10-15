@@ -10,14 +10,14 @@
             <h2>商品登録</h2>
         </div>
         <div class="register-form">
-            <form action="POST" action="{{route('products.index')}}">
+            <form method="POST" action="{{route('products.index')}}">
                 @csrf
                 <p class="input-title">商品名<span class="input-red">必須</span></p>
                 <input class="input-content" type="text" name="item" placeholder="商品名を入力">
                 <p class="input-title">値段<span class="input-red">必須</span></p>
                 <input class="input-content" type="text" name="price" placeholder="値段を入力">
                 <p class="input-title">商品画像<span class="input-red">必須</span></p>
-                /*画像の選択*/
+                <input type="file" name="image" id="image">
                 <p class="input-title">季節<span class="input-red">必須</span><span class="input-red--detail">複数選択可</span></p>
                 <label class="season-input">
                     <input type="radio" name="season" value="spring">春
