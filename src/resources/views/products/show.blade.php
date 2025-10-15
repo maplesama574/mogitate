@@ -6,8 +6,9 @@
 
 @section('content')
     <div class="detail">
-        <form action="{{route('products.index')}}" method="POST" >
+        <form action="{{route('products.update', $product->id)}}" method="POST" >
             @csrf
+            @method('PUT')
     <div class="product-list">
         <a class="product-list--blue" href="{{route('products.index')}}">商品一覧</a>
         <p>></p>
@@ -32,8 +33,14 @@
         <label class="list-season">
             <input type="radio" name="season" value="winter" {{$product->season === 'winter' ? 'checked' : ''}}>冬
         </label>
-
-        商品説明
+        <div class="product-detail__explain">
+            <p class=""list-title>商品説明</p>
+            <textarea name="text" id="text" placeholder="商品の説明を入力"></textarea>
+        </div>
+        <div class="button">
+            <a href="{{route('products.index')}}">戻る</a>
+            <button type="submit">変更を保存</button>
+        </div>
         </div>
         </form>
     </div>

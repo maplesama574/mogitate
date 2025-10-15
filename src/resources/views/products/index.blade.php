@@ -8,7 +8,7 @@
         <div class="category">
             <div class="category-title">
                 <h2>商品一覧</h2>
-                <form method="GET" action="{{route('products.create')}}">
+                <form method="GET" action="{{route('products.register')}}">
                     @csrf
                     <button class="create-button">+商品を追加</button>
             </div>

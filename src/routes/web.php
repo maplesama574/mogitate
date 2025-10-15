@@ -19,10 +19,13 @@ Route::get('/', function () {
 });
 
 //ここからは必要
-//index.blade.php
-Route::get('/products', [ProductsController::class, 'index'])->name('products.index');
 
-Route::put('/products/{productId}/update', [ProductsController::class, 'update'])->name('products.update');
+Route::get('/products', [ProductsController::class, 'index'])->name('products.index');
+Route::post('/products', [ProductsController::class, 'store'])->name('products.index');
 
 Route::get('/products/register', [ProductsController::class, 'create'])->name('products.register');
-Route::post('/products', [ProductsController::class, 'store'])->name('products.index');
+
+Route::get('/products/{productId}', [ProductsController::class, 'show'])->name('products.show');
+Route::put('/products/{productId}', [ProductsController::class, 'update'])->name('products.update');
+
+Route::delete('/products/{productId}/delete', [ProductsController::class, 'destroy'])->name('products.delete');

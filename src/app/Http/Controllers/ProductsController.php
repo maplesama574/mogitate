@@ -20,7 +20,7 @@ class ProductsController extends Controller
     {
         return view('products.register');
     }
-    public function store(Request $request, $productId)
+    public function store(Request $request)
     {
         $request->validate([
             'name' => 'required|string', 
@@ -31,24 +31,63 @@ class ProductsController extends Controller
             'text'=>'required|string|max:120'
         ]);
 
-//画像保存処理
-
-        $oldImage = $product->image;
-        
+//画像保存処理        
         if ($request->hasFile('image')) {
         $path = $request->file('image')->store('images', 'public');
         $request->merge(['image' => $path]);
-
-        if ($oldImage && Storage::disk('public')->exists($oldImage))
-        {
-            Storage::disk('public')->delete($oldImage);
-        }
         }
 
-        $product->update($request->only('name', 'price', 'image', 'text'));
+        $product = Product::create($request->only('name', 'price', 'image', 'text'));
 
          $product->seasons()->sync($request->seasons);
 
         return redirect()->route('products.index');
     }
+    //詳細ページ
+    public function show($productId)
+    {
+        $product = Product::findOrFail($productId);
+        $seasons = Season::all();
+        return view('products.show', compact('product', 'seasons'));
+    }
+
+    //更新処理
+        public function update(Request $request, $productId)
+        {
+            $product=Product::findOrFail($productId);
+            $product->update($request->only('name', 'price', 'text'));
+
+        if ($request->has('seasons')) {
+        $product->seasons()->sync($request->seasons);
+        }
+
+        if ($request->hasFile('image')) {
+        if ($product->image && Storage::disk('public')->exists($product->image)) {
+        Storage::disk('public')->delete($product->image);
+        }
+        $path = $request->file('image')->store('images', 'public');
+        $product->update(['image' => $path]);
+    }
+            
+    return redirect()->route('products.index');
+        }
+    
+    //データ編集処理
+    public function edit($productId)
+{
+    $product = Product::findOrFail($productId);
+    $seasons = Season::all();
+    return view('products.edit', compact('product', 'seasons'));
+}
+
+
+    //削除処理
+        public function destroy($productId){
+            $product = Product::findOrFail($productId);
+        if ($product->image && Storage::disk('public')->exists($product->image)) {
+        Storage::disk('public')->delete($product->image);
+}
+$product->delete();
+
+        }
     }

@@ -12,8 +12,8 @@ class Product extends Model
     protected $fillable = [
         'name', 'price', 'image', 'description'
     ];
-    public function seasons()
-    {
-        return $this->belongsToMany(Season::class, 'product_season');
+    //季節処理
+    public function seasons(){
+        return $this->belongsToMany(Season::class);
     }
 }
