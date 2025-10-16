@@ -21,7 +21,7 @@ Route::get('/', function () {
 //ここからは必要
 
 Route::get('/products', [ProductsController::class, 'index'])->name('products.index');
-Route::post('/products', [ProductsController::class, 'store'])->name('products.index');
+Route::post('/products', [ProductsController::class, 'store'])->name('products.store');
 
 Route::get('/products/register', [ProductsController::class, 'create'])->name('products.register');
 

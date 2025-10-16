@@ -28,7 +28,8 @@
                 </form>
                 @foreach ($products as $product)
                 <div class="product-item">
-                <a href="{{url('/products/' .$product->id)}}">
+                <a href="{{route('products.show', ['productId'=>$product->id])}}">
+                    <img src="{{asset('storage/' . $product->image)}}" alt="{{product->name}}" class="image-model">
                     <p>{{$product->name}}</p>
                 <p>{{$product->price}}円</p>
                 </a>

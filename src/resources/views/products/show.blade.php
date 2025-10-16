@@ -6,20 +6,20 @@
 
 @section('content')
     <div class="detail">
-        <form action="{{route('products.update', $product->id)}}" method="POST" >
+        <form action="{{route('products.update', $product->id)}}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PUT')
     <div class="product-list">
         <a class="product-list--blue" href="{{route('products.index')}}">商品一覧</a>
         <p>></p>
-        <p>{{$、、、}}</p>
+        <p>{{$product->name}}</p>
     </div>
     <div class="product-detail">
-        <input type="file" name="image" id="image">
+        <img src="{{asset('storage/' .$product->image)}}" alt="{{product->name}}">
         <p class="list-title">商品名</p>
-        <input type="text" name="name" placeholder={{$,,,,}}>
+        <input type="text" name="name" placeholder="{{$product->name}}">
         <p class="list-title">値段</p>
-        <input type="text" name="price" placeholder={{$,,,,}}>
+        <input type="text" name="price" placeholder="{{$product->price}}">
         <p class="list-title">季節</p>
         <label class="list-season">
             <input type="radio" name="season" value="spring" {{$product->season === 'spring' ? 'checked' : ''}}>春
@@ -35,7 +35,7 @@
         </label>
         <div class="product-detail__explain">
             <p class=""list-title>商品説明</p>
-            <textarea name="text" id="text" placeholder="商品の説明を入力"></textarea>
+            <textarea name="text" id="text" placeholder="{{$product->text}}"></textarea>
         </div>
         <div class="button">
             <a href="{{route('products.index')}}">戻る</a>
