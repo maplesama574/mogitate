@@ -1,6 +1,6 @@
 .category {
     background-color: #f8f8f8;
-    height: auto;
+    height: 1200px;
     width: auto;
 }
 
@@ -51,7 +51,6 @@
 .product-list{
     display: flex;
     flex-wrap: wrap;
-    
     gap: 10px;
 }
 .product-item{
@@ -61,4 +60,34 @@
 .product-image{
     width: 280px;
     height: auto;
+}
+
+.pagination-item{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    list-style: none;
+}
+.page-item--disabled,
+.page-item--active, 
+.page-item, 
+.page-link{
+    text-decoration: none;
+    list-style: none;
+    color: black;
+}
+.page-link {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    background-color: white;
+    width: 30px;
+    height: 30px;
+    text-decoration: none;
+}
+.page-item--active .page-link {
+    background-color: #f5c800;
+    color: #333;
 }

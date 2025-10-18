@@ -40,4 +40,13 @@
                 @endforeach
             </div>
         </div>
+        <div class="pagination">
+        <ul class="pagination-item">
+        <li class="page-item--disabled"><span class="page-link"><</span></li>
+        <li class="page-item--active"><a class="page-link" href="?page=1">1</a></li>
+        <li class="page-item"><a class="page-link" href="?page=2">2</a></li>
+        <li class="page-item"><a class="page-link" href="?page=3">3</a></li>
+        <li class="page-item"><a class="page-link" href="?page=3">></a></li>
+    </ul>
+</div>
 @endsection

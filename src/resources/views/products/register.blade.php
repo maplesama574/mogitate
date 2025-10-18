@@ -13,7 +13,7 @@
             <form method="POST" action="{{route('products.index')}}">
                 @csrf
                 <p class="input-title">商品名<span class="input-red">必須</span></p>
-                <input class="input-content" type="text" name="item" placeholder="商品名を入力">
+                <input class="input-content" type="text" name="name" placeholder="商品名を入力">
                 <p class="input-title">値段<span class="input-red">必須</span></p>
                 <input class="input-content" type="text" name="price" placeholder="値段を入力">
                 <p class="input-title">商品画像<span class="input-red">必須</span></p>

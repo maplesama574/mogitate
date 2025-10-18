@@ -6,19 +6,22 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Product;
 use App\Models\Season;
+use App\Http\Requests\ProductsRequest;
 
 class ProductsController extends Controller
 {
     //index表示
     public function index()
-    {
-        $products = Product::all();
+    {   
+        $products = Product::simplePaginate(6);
         $seasons = Season::all();
         return view('products.index', compact('products', 'seasons'));
     }
     public function create()
     {
-        return view('products.register');
+        $product=$request->all();
+        Product::create($product);
+        return redirect('products.register');
     }
     public function store(Request $request)
     {
