@@ -1,0 +1,23 @@
+.detail {
+    background-color: #f8f8f8;
+    height: auto;
+    width: auto;
+    text-align: center;
+}
+
+.product-list {
+    display: flex;
+}
+.product-list--blue{
+    text-decoration: none;
+}
+
+.product-detail{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.detail-img{
+    width: 400px;
+    height: 300px;
+}

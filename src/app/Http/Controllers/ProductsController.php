@@ -37,7 +37,7 @@ class ProductsController extends Controller
         $request->merge(['image' => $path]);
         }
 
-        $product = Product::create($request->only('name', 'price', 'image', 'text'));
+        $product = Product::create($REQUEST->only('name', 'price', 'image', 'text'));
 
          $product->seasons()->sync($request->seasons);
 
@@ -47,8 +47,7 @@ class ProductsController extends Controller
     public function show($productId)
     {
         $product = Product::findOrFail($productId);
-        $seasons = Season::all();
-        return view('products.show', compact('product', 'seasons'));
+        return view('products.show', compact('product'));
     }
 
     //更新処理

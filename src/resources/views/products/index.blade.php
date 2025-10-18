@@ -26,13 +26,16 @@
                         <option value="low-cost">安い順に表示</option>
                     </select>
                 </form>
+                </div>
+                <div class="product-list">
                 @foreach ($products as $product)
                 <div class="product-item">
                 <a href="{{route('products.show', ['productId'=>$product->id])}}">
-                    <img src="{{asset('storage/' . $product->image)}}" alt="{{product->name}}" class="image-model">
+                    <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}"
+                    class="product-image">
+                    </a>
                     <p>{{$product->name}}</p>
                 <p>{{$product->price}}円</p>
-                </a>
                 </div>
                 @endforeach
             </div>
