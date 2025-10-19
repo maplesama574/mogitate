@@ -17,7 +17,7 @@
                 </form>
                 <form method="GET" action="{{route('products.index')}}">
                     @csrf
-                    <input class="search-textbox" type="text" name="keyword" placeholder="商品名で検索">
+                    <input class="search-textbox" type="text" name="keyword" placeholder="商品名で検索" value="{{ request('keyword') }}">
                     <button class="category-button">検索</button>
                     <h3>価格順で表示</h3>
                     <select class="category-cost" name="category">

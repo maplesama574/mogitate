@@ -30,3 +30,5 @@ Route::put('/products/{productId}', [ProductsController::class, 'update'])->name
 
 Route::delete('/products/{productId}/delete', [ProductsController::class, 'destroy'])->name('products.delete');
 
+Route::resource('products', ProductsController::class);
+

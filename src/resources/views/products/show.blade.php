@@ -17,30 +17,39 @@
     <div class="product-detail">
         <a href="{{url('/products/' . $product->id)}}">
         <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}" class="detail-img">
+        <div class="image-input">
+        <input type="file" name="image" id="image" accept="image/*">
+        </div>
         </a>
         <div class="detail-text">
         <p class="list-title">商品名</p>
-        <input class="list-input" type="text" name="name" placeholder="{{$product->name}}">
+        <input class="list-input" type="text" name="name" value="{{$product->name}}">
         <p class="list-title">値段</p>
-        <input class="list-input" type="text" name="price" placeholder="{{$product->price}}">
+        <input class="list-input" type="text" name="price" value="{{$product->price}}">
         <p class="list-title">季節</p>
-        <label class="list-season">
-            <input type="radio" name="season" value="spring" {{ old('season', $product->season) === 'spring' ? 'checked' : '' }}>春
-        </label>
-        <label class="list-season">
-            <input type="radio" name="season" value="summer" {{ old('season', $product->season) === 'spring' ? 'checked' : '' }}{$pro}>夏
-        </label>
-        <label class="list-season">
-            <input type="radio" name="season" value="fall" {{ old('season', $product->season) === 'spring' ? 'checked' : '' }}>秋
-        </label>
-        <label class="list-season">
-            <input type="radio" name="season" value="winter" {{ old('season', $product->season) === 'spring' ? 'checked' : '' }}>冬
-        </label>
+        <div class="season-box">
+        @php
+    $checkedSeasons = $product->seasons->pluck('name')->toArray();
+@endphp
+
+<label class="list-season">
+    <input type="checkbox" name="seasons[]" value="1" {{ in_array('1', $checkedSeasons) ? 'checked' : '' }}>春
+</label>
+<label class="list-season">
+    <input type="checkbox" name="seasons[]" value="2" {{ in_array('2', $checkedSeasons) ? 'checked' : '' }}>夏
+</label>
+<label class="list-season">
+    <input type="checkbox" name="seasons[]" value="3" {{ in_array('3', $checkedSeasons) ? 'checked' : '' }}>秋
+</label>
+<label class="list-season">
+    <input type="checkbox" name="seasons[]" value="4" {{ in_array('4', $checkedSeasons) ? 'checked' : '' }}>冬
+</label>
+        </div>
+        </div>
+        </div>
         <div class="product-detail__explain">
             <p class="list-title">商品説明</p>
-            <textarea name="description" id="text">{{$product->description}}</textarea>
-        </div>
-        </div>
+            <textarea name="description" id="text" class="list-text">{{$product->description}}</textarea>
         </div>
         <div class="button">
             <a href="{{route('products.index')}}" class="reset-button">戻る</a>

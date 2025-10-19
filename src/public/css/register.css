@@ -1,5 +1,5 @@
 .register {
-    background-color: f8f8f8;
+    background-color:#f8f8f8;
     height: 800px;
     width: auto;
 }
@@ -8,6 +8,7 @@
     display: flex;
     justify-content:center;
     align-items: center;
+    margin-right: 580px;
 }
 
 .register-form {
@@ -34,9 +35,20 @@
     color: red;
     font-size: 15px;
 }
-.season-input{
-    padding-right: 40px;
+
+.season-input input[type="checkbox"] {
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    accent-color: #4b4b4b;
+    vertical-align: middle;
+    margin-right: 5px;
+    cursor: pointer;
 }
+.season-input{
+    margin-right: 25px;
+}
+
 .input-textarea{
     padding: 10px 510px 100px 5px;
 }
@@ -51,6 +63,7 @@
     background-color: #e0dfde;
     margin: 10px 10px 0px 0px;
     text-decoration: none;border-radius: 5px;
+    color: black;
 }
 .register-button{
     padding: 10px 60px;
@@ -58,4 +71,10 @@
     margin: 10px 0px 0px 10px;
     text-decoration: none;
     border-radius: 5px;
+    border-style: none;
+    font-size: 15px;
+}
+
+.error{
+    color: red;
 }

@@ -11,36 +11,63 @@ use App\Http\Requests\ProductsRequest;
 class ProductsController extends Controller
 {
     //index表示
-    public function index()
+    public function index(Request $request)
     {   
-        $products = Product::simplePaginate(6);
-        $seasons = Season::all();
-        return view('products.index', compact('products', 'seasons'));
+    $products = Product::simplePaginate(6);
+    $seasons = Season::all();
+    $keyword = $request->input('keyword');
+    $query=Product::query();
+
+    if ($request->filled('keyword')) {
+        $query->where(function($subQuery) use ($keyword) {
+            $subQuery->where('name', 'like', "%{$keyword}%")
+              ->orWhere('price', 'like', "%{$keyword}%")
+              ->orWhere('description', 'like', "%{$keyword}%");
+        });
     }
+
+    if ($request->filled('category')) {
+        if ($request->category === 'high-cost') {
+            $query->orderBy('price', 'desc');
+        } elseif ($request->category === 'low-cost') {
+            $query->orderBy('price', 'asc');
+        }
+    }
+
+    $products = $query->simplePaginate(6)->appends($request->all());
+
+    $seasons = Season::all();
+    return view('products.index', compact('products', 'seasons'));
+    }
+
     public function create()
     {
-        $product=$request->all();
-        Product::create($product);
-        return redirect('products.register');
+    $product = new Product();
+    $seasons = Season::all();
+    return view('products.register', compact('product', 'seasons'));
     }
-    public function store(Request $request)
+
+    //storeページ
+    public function store(ProductsRequest $request)
     {
-        $request->validate([
-            'name' => 'required|string', 
-            'price' => 'required|numeric|min:0|max:10000',
-            'image'=>'required|image|mimes:jpg,png',
-            'seasons'=>'required|array', 
-            'seasons.*'=>'exists:seasons,id',
-            'text'=>'required|string|max:120'
-        ]);
+        $data=$request->all();
 
 //画像保存処理        
         if ($request->hasFile('image')) {
         $path = $request->file('image')->store('images', 'public');
-        $request->merge(['image' => $path]);
+        $data['image']= $path;
         }
 
-        $product = Product::create($REQUEST->only('name', 'price', 'image', 'text'));
+        $product = Product::create([
+        'name' => $data['name'],
+        'price' => $data['price'],
+        'description' => $data['text'],
+        'image' => $data['image'],
+    ]);
+
+    if (isset($data['seasons'])) {
+        $product->seasons()->sync($data['seasons']);
+    }
 
          $product->seasons()->sync($request->seasons);
 
@@ -57,20 +84,26 @@ class ProductsController extends Controller
         public function update(Request $request, $productId)
         {
             $product=Product::findOrFail($productId);
-            $product->update($request->only('name', 'price', 'text'));
+            $product->update($request->only('name', 'price', 'description'));
 
         if ($request->has('seasons')) {
         $product->seasons()->sync($request->seasons);
+        }else{
+            $product->seasons()->sync([]);
         }
+
+        $product=Product::findOrFail($productId);
 
         if ($request->hasFile('image')) {
         if ($product->image && Storage::disk('public')->exists($product->image)) {
         Storage::disk('public')->delete($product->image);
         }
         $path = $request->file('image')->store('images', 'public');
-        $product->update(['image' => $path]);
-    }
-            
+        $data['image'] = $path;
+        }
+
+        $product->update($validated);
+        
     return redirect()->route('products.index');
         }
     

@@ -24,19 +24,49 @@
     align-items: center;
 }
 .detail-img{
-    width: 400px;
-    height: 300px;
+    width: 350px;
+    height: 250px;
+}
+.image-input{
+    color: black;
 }
 
 .detail-text{
     padding: 0px 30px;
 }
 .list-title{
-    margin-bottom: 5px;
+    margin-bottom: 10px;
 }
 .list-input{
     padding:5px 150px 5px 0;
-    margin-bottom: 20px;
+    margin-bottom: 5px;
+}
+
+.season-box{
+    display: flex;
+    justify-content: space-between;
+}
+.list-season{
+    margin-right: 20px;
+}
+.season--input{
+    color: #e1e0df;
+}
+
+
+.product-detail__explain{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: flex-start;
+    width: auto;
+    margin-left: 250px;
+}
+
+.list-text{
+    width: 700px;
+    height: 100px;
+    border-radius: 3px;
 }
 
 .button{
@@ -44,9 +74,22 @@
     justify-content: center;
     margin-top: 30px;
 }
-.reset-botton{
-    margin-right: 10px;
+.reset-button{
+    margin-right: 20px;
+    text-decoration: none;
+    color: #4b4b4b;
+    font-weight: bold;
+    background-color: #e0dfde;
+    padding: 15px 70px;
+    border-radius: 3px;
+    font-size: 15px;
 }
 .confirm-button{
-    margin-left: 10px;
+    margin-left: 20px;
+    font-weight: bold;
+    background-color: #f5c800;
+    color: #4b4b4b;
+    padding: 15px 50px;
+    border-radius: 3px;
+    border-style: none;
 }
