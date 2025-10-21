@@ -58,29 +58,33 @@ input.addEventListener('change', function() {
                     </div>
                 @endif
                 <p class="input-title">季節<span class="input-red">必須</span><span class="input-red--detail">複数選択可</span></p>
-                @php
+    @php
+if(isset($product) && $product->exists){
+    $oldSeasons = old('seasons', $product->seasons->pluck('id')->map(fn($id)=> (string)$id)->toArray());
+} else {
     $oldSeasons = old('seasons', []);
+}
 @endphp
 <label class="season-input">
-    <input type="checkbox" name="seasons[]" id="1" {{ in_array('spring', $oldSeasons) ? 'checked' : '' }}>春
+    <input type="checkbox" name="seasons[]" value="1" {{ in_array('1', $oldSeasons) ? 'checked' : '' }}>春
 </label>
 <label class="season-input">
-    <input type="checkbox" name="seasons[]" id="2" {{ in_array('summer', $oldSeasons) ? 'checked' : '' }}>夏
+    <input type="checkbox" name="seasons[]" value="2" {{ in_array('2', $oldSeasons) ? 'checked' : '' }}>夏
 </label>
 <label class="season-input">
-    <input type="checkbox" name="seasons[]" id="3" {{ in_array('fall', $oldSeasons) ? 'checked' : '' }}>秋
+    <input type="checkbox" name="seasons[]" value="3" {{ in_array('3', $oldSeasons) ? 'checked' : '' }}>秋
 </label>
 <label class="season-input">
-    <input type="checkbox" name="seasons[]" id="4" {{ in_array('winter', $oldSeasons) ? 'checked' : '' }}>冬
-</label>
+    <input type="checkbox" name="seasons[]" value="4" {{ in_array('4', $oldSeasons) ? 'checked' : '' }}>冬
+@if ($errors->has('seasons'))
+    <div class="error">
+        @foreach ($errors->get('seasons') as $message)
+            <p>{{ $message }}</p>
+        @endforeach
+    </div>
+@endif
 
-                @if ($errors->has('season'))
-                <div class="error">
-                @foreach ($errors->get('season') as $message)
-                <p>{{ $message }}</p>
-                @endforeach
-                </div>
-                @endif
+</label>
 
                 <p class="input-title">商品説明<span class="input-red">必須</span></p>
                 <textarea class="input-textarea" name="text" placeholder="商品の説明を入力">{{old('text')}}</textarea>

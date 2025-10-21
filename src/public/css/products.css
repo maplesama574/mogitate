@@ -51,15 +51,23 @@
 .product-list{
     display: flex;
     flex-wrap: wrap;
+    justify-content:space-around;
     gap: 10px;
 }
 .product-item{
     border: 1px solid black;
-    padding: 15px;
+    padding: 0px;
 }
 .product-image{
-    width: 280px;
-    height: auto;
+    width: 305px;
+    max-width: 100%;
+    margin: 0;
+    padding: 0;
+    height: 80%;
+}
+.product-content{
+    display: flex;
+    justify-content: space-around;
 }
 
 .pagination-item{

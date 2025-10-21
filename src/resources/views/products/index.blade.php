@@ -7,7 +7,7 @@
     @section('content')
         <div class="category">
             <div class="category-title">
-                <h2>商品一覧</h2>
+                <h1>商品一覧</h1>
                 <form method="GET" action="{{route('products.register')}}">
                     @csrf
                     <button class="create-button">+商品を追加</button>
@@ -31,22 +31,39 @@
                 @foreach ($products as $product)
                 <div class="product-item">
                 <a href="{{route('products.show', ['productId'=>$product->id])}}">
-                    <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}"
-                    class="product-image">
+                    <img src="{{ asset('storage/products/' . basename($product->image)) }}" alt="{{ $product->name }}" class="product-image">
                     </a>
-                    <p>{{$product->name}}</p>
-                <p>{{$product->price}}円</p>
+                    <div class="product-content">
+                    <p class="product-name">{{$product->name}}</p>
+                    <p class="product-price">
+                    {{$product->price}}円
+                    </p>
+                </div>
                 </div>
                 @endforeach
             </div>
         </div>
         <div class="pagination">
         <ul class="pagination-item">
-        <li class="page-item--disabled"><span class="page-link"><</span></li>
-        <li class="page-item--active"><a class="page-link" href="?page=1">1</a></li>
-        <li class="page-item"><a class="page-link" href="?page=2">2</a></li>
-        <li class="page-item"><a class="page-link" href="?page=3">3</a></li>
-        <li class="page-item"><a class="page-link" href="?page=3">></a></li>
-    </ul>
+            
+    @if ($products->onFirstPage())
+        <li class="page-item--disabled"><span class="page-link">＜</span></li>
+    @else
+        <li class="page-item"><a class="page-link" href="{{ $products->previousPageUrl() }}">＜</a></li>
+    @endif
+
+    @for ($i = 1; $i <= $products->lastPage(); $i++)
+        <li class="{{ $i == $products->currentPage() ? 'page-item--active' : 'page-item' }}">
+            <a class="page-link" href="{{ $products->url($i) }}">{{ $i }}</a>
+        </li>
+    @endfor
+
+    @if ($products->hasMorePages())
+        <li class="page-item"><a class="page-link" href="{{ $products->nextPageUrl() }}">＞</a></li>
+    @else
+        <li class="page-item--disabled"><span class="page-link">＞</span></li>
+    @endif
+</ul>
+
 </div>
 @endsection

@@ -12,17 +12,15 @@ class ProductsController extends Controller
 {
     //index表示
     public function index(Request $request)
-    {   
-    $products = Product::simplePaginate(6);
-    $seasons = Season::all();
-    $keyword = $request->input('keyword');
-    $query=Product::query();
+{
+    $query = Product::query();
 
     if ($request->filled('keyword')) {
+        $keyword = $request->input('keyword');
         $query->where(function($subQuery) use ($keyword) {
             $subQuery->where('name', 'like', "%{$keyword}%")
-              ->orWhere('price', 'like', "%{$keyword}%")
-              ->orWhere('description', 'like', "%{$keyword}%");
+                     ->orWhere('price', 'like', "%{$keyword}%")
+                     ->orWhere('description', 'like', "%{$keyword}%");
         });
     }
 
@@ -34,11 +32,11 @@ class ProductsController extends Controller
         }
     }
 
-    $products = $query->simplePaginate(6)->appends($request->all());
-
+    $products = $query->paginate(6)->appends($request->all()); // paginate() に変更
     $seasons = Season::all();
-    return view('products.index', compact('products', 'seasons'));
-    }
+
+    return view('products.index', compact('products'));
+}
 
     public function create()
     {
@@ -49,60 +47,61 @@ class ProductsController extends Controller
 
     //storeページ
     public function store(ProductsRequest $request)
-    {
-        $data=$request->all();
+{
+    $data = $request->all();
 
-//画像保存処理        
-        if ($request->hasFile('image')) {
-        $path = $request->file('image')->store('images', 'public');
-        $data['image']= $path;
-        }
+    $imagePath = null;
+    if ($request->hasFile('image')) {
+        $imagePath = $request->file('image')->store('products', 'public');
+    }
 
-        $product = Product::create([
+    $product = Product::create([
         'name' => $data['name'],
         'price' => $data['price'],
         'description' => $data['text'],
-        'image' => $data['image'],
+        'image' => $imagePath,
     ]);
 
-    if (isset($data['seasons'])) {
-        $product->seasons()->sync($data['seasons']);
-    }
+    $seasonIds = array_filter(array_map('intval', $request->input('seasons', [])));
+    $product->seasons()->sync($seasonIds);
 
-         $product->seasons()->sync($request->seasons);
+    return redirect()->route('products.index');
+}
 
-        return redirect()->route('products.index');
-    }
     //詳細ページ
     public function show($productId)
     {
-        $product = Product::findOrFail($productId);
-        return view('products.show', compact('product'));
+    $product = Product::findOrFail($productId);
+    return view('products.show', compact('product'));
     }
+
 
     //更新処理
         public function update(Request $request, $productId)
         {
-            $product=Product::findOrFail($productId);
-            $product->update($request->only('name', 'price', 'description'));
+        $validated = $request->validate([
+    'name' => 'required|string|max:255',
+    'price' => 'required|numeric',
+    'description' => 'required|string',
+    'seasons' => 'required|array'
+]);
 
-        if ($request->has('seasons')) {
-        $product->seasons()->sync($request->seasons);
-        }else{
-            $product->seasons()->sync([]);
-        }
+$product = Product::findOrFail($productId);
+$product->update($validated);
 
-        $product=Product::findOrFail($productId);
+$seasonIds = array_filter(array_map('intval', $request->input('seasons', [])));
+$product->seasons()->sync($seasonIds);
 
         if ($request->hasFile('image')) {
-        if ($product->image && Storage::disk('public')->exists($product->image)) {
+    if ($product->image && Storage::disk('public')->exists($product->image)) {
         Storage::disk('public')->delete($product->image);
-        }
-        $path = $request->file('image')->store('images', 'public');
-        $data['image'] = $path;
-        }
+    }
 
-        $product->update($validated);
+    $path = $request->file('image')->store('products', 'public');
+
+    $product->update(['image' => $path]);
+}
+
         
     return redirect()->route('products.index');
         }
@@ -110,8 +109,9 @@ class ProductsController extends Controller
     //データ編集処理
     public function edit($productId)
 {
-    $product = Product::findOrFail($productId);
+    $product = Product::with('seasons')->findOrFail($productId);
     $seasons = Season::all();
+
     return view('products.edit', compact('product', 'seasons'));
 }
 
@@ -124,5 +124,6 @@ class ProductsController extends Controller
 }
 $product->delete();
 
-        }
+return redirect()->route('products.index');
+}
     }

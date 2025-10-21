@@ -15,6 +15,6 @@ class Season extends Model
     // 商品とのリレーション
     public function products()
     {
-        return $this->belongsToMany(Product::class, 'product_season');
+        return $this->belongsToMany(Product::class);
     }
 }
